@@ -18,16 +18,15 @@ class MenuController {
     func fetchCategories(completion: @escaping(Result<[String], Error>) -> Void) {
         let categoriesURL = baseURL?.appendingPathComponent("categories")
         let task = URLSession.shared.dataTask(with: categoriesURL!) { data, response, error in
-            if let data = data {
-                do {
-                    let jsonDecoder = JSONDecoder()
-                    let categoryResponse = try jsonDecoder.decode(CategoryResponse.self, from: data)
-                    completion(.success(categoryResponse.categories))
-                }
-                catch {
-                    completion(.failure(error))
-                }
-            } else if let error = error {
+            guard let data = data else {
+                return
+            }
+            do {
+                let jsonDecoder = JSONDecoder()
+                let categoryResponse = try jsonDecoder.decode(CategoryResponse.self, from: data)
+                completion(.success(categoryResponse.categories))
+            }
+            catch {
                 completion(.failure(error))
             }
         }
@@ -45,16 +44,16 @@ class MenuController {
         let menuURL = components.url!
         
         let task = URLSession.shared.dataTask(with: menuURL) { data, response, error in
-            if let data = data {
-                do {
-                    let jsonDecoder = JSONDecoder()
-                    let menuItemsResponse = try jsonDecoder.decode(MenuResponse.self, from: data)
-                    completion(.success(menuItemsResponse.items))
-                }
-                catch {
-                    completion(.failure(error))
-                }
-            } else if let error = error {
+            guard let data = data else {
+                return
+            }
+            
+            do {
+                let jsonDecoder = JSONDecoder()
+                let menuResponse = try jsonDecoder.decode(MenuResponse.self, from: data)
+                completion(.success(menuResponse.items))
+            }
+            catch {
                 completion(.failure(error))
             }
         }
