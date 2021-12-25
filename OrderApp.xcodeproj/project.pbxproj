@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A64FD7812777280500496135 /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A64FD7802777280500496135 /* MenuController.swift */; };
 		A6EB39C32775CE42007955FB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EB39C22775CE42007955FB /* AppDelegate.swift */; };
 		A6EB39C52775CE42007955FB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EB39C42775CE42007955FB /* SceneDelegate.swift */; };
 		A6EB39CA2775CE42007955FB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A6EB39C82775CE42007955FB /* Main.storyboard */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A64FD7802777280500496135 /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
 		A6EB39BF2775CE42007955FB /* OrderApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OrderApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6EB39C22775CE42007955FB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A6EB39C42775CE42007955FB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 		A6EB39DA2775CE7D007955FB /* NetworkManager */ = {
 			isa = PBXGroup;
 			children = (
+				A64FD7802777280500496135 /* MenuController.swift */,
 			);
 			path = NetworkManager;
 			sourceTree = "<group>";
@@ -206,6 +209,7 @@
 				A6EB39E62775D86D007955FB /* MenuResponse.swift in Sources */,
 				A6EB39E22775D6B0007955FB /* MenuDetailViewController.swift in Sources */,
 				A6EB39DE2775D50C007955FB /* MenuTableViewController.swift in Sources */,
+				A64FD7812777280500496135 /* MenuController.swift in Sources */,
 				A6EB39EC2775D936007955FB /* Order.swift in Sources */,
 				A6EB39E02775D515007955FB /* OrderTableViewController.swift in Sources */,
 				A6EB39EA2775D8F9007955FB /* OrderResponse.swift in Sources */,
