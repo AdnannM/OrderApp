@@ -35,31 +35,32 @@ class MenuController {
     }
     
     // Get MenuItems
-    func fetchMenuItems(forCategory categoryName: String, completion: @escaping(Result<[MenuItem], Error>) -> Void) {
-        let menuItemURL = baseURL?.appendingPathComponent("menu")
-        var components = URLComponents(url: menuItemURL!, resolvingAgainstBaseURL: true)!
-        components.queryItems = [
-            URLQueryItem(name: "category", value: categoryName)
-        ]
-        let menuURL = components.url!
-        
-        let task = URLSession.shared.dataTask(with: menuURL) { data, response, error in
-            guard let data = data else {
-                return
-            }
-            
-            do {
-                let jsonDecoder = JSONDecoder()
-                let menuResponse = try jsonDecoder.decode(MenuResponse.self, from: data)
-                completion(.success(menuResponse.items))
-            }
-            catch {
-                completion(.failure(error))
-            }
-        }
-        
-        task.resume()
-    }
+     func fetchMenuItems(forCategory categoryName: String, completion: @escaping(Result<[MenuItem], Error>) -> Void) {
+         let menuItemURL = baseURL?.appendingPathComponent("menu")
+         var components = URLComponents(url: menuItemURL!, resolvingAgainstBaseURL: true)!
+         components.queryItems = [
+             URLQueryItem(name: "category", value: categoryName)
+         ]
+         let menuURL = components.url!
+         
+         let task = URLSession.shared.dataTask(with: menuURL) { data, response, error in
+             guard let data = data else {
+                 return
+             }
+             
+             do {
+                 let jsonDecoder = JSONDecoder()
+                 let menuResponse = try jsonDecoder.decode(MenuResponse.self, from: data)
+                 completion(.success(menuResponse.items))
+             }
+             catch {
+                 completion(.failure(error))
+             }
+         }
+         
+         task.resume()
+     }
+
     
     // Post Order
     func submitOrder(forMenuItems menuID: [Int], completion: @escaping(Result<MinutesToPrepere, Error>) -> Void) {

@@ -43,6 +43,16 @@ class CategoryTableViewController: UITableViewController {
             self.present(alert, animated: true, completion: nil)
         }
     }
+    
+     // MARK: - IBSegueAction - Pass Data
+    @IBSegueAction func showMenu(_ coder: NSCoder, sender: Any?) -> MenuTableViewController? {
+        guard let cell = sender as? UITableViewCell,
+              let indexPath = tableView.indexPath(for: cell) else {
+                  return nil
+              }
+        let category = categories[indexPath.row]
+        return MenuTableViewController(coder: coder, categories: category)
+    }
 }
 
  // MARK: - TableView
