@@ -13,6 +13,14 @@ import Foundation
 class MenuController {
     static let shared = MenuController()
     
+    var order = Order() {
+        didSet {
+            NotificationCenter.default.post(name: MenuController.orderUpdateNotification, object: nil)
+        }
+    }
+    
+    static let orderUpdateNotification = Notification.Name("MenuController.OrderUpdate")
+    
     static let priceFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency

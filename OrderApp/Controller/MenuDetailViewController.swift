@@ -20,9 +20,9 @@ class MenuDetailViewController: UIViewController {
         }
     }
     
-    
     let menuItem: MenuItem
     
+    // Pass Data
     init?(coder: NSCoder, menuItem: MenuItem) {
         self.menuItem = menuItem
         super.init(coder: coder)
@@ -49,6 +49,8 @@ class MenuDetailViewController: UIViewController {
             self.addToOrderButton.transform = CGAffineTransform(scaleX: 3.0, y: 2.0)
             self.addToOrderButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         }, completion: nil)
+        
+        MenuController.shared.order.menuItems.append(menuItem)
     }
 }
 
