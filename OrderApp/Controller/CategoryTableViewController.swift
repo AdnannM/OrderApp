@@ -44,7 +44,6 @@ class CategoryTableViewController: UITableViewController {
         }
     }
     
-     // MARK: - IBSegueAction - Pass Data
     @IBSegueAction func showMenu(_ coder: NSCoder, sender: Any?) -> MenuTableViewController? {
         guard let cell = sender as? UITableViewCell,
               let indexPath = tableView.indexPath(for: cell) else {
@@ -54,7 +53,6 @@ class CategoryTableViewController: UITableViewController {
         return MenuTableViewController(coder: coder, categories: category)
     }
 }
-
  // MARK: - TableView
 extension CategoryTableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {

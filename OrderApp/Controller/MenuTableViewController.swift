@@ -8,17 +8,8 @@
 import UIKit
 
 class MenuTableViewController: UITableViewController {
-
     var categories: String
     var menuItems = [MenuItem]()
-    
-    let priceFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.currencySymbol = "$"
-        
-        return formatter
-    }()
     
     init?(coder: NSCoder, categories: String) {
         self.categories = categories
@@ -33,9 +24,9 @@ class MenuTableViewController: UITableViewController {
         super.viewDidLoad()
         
         fetchMenuItems()
-
+        
     }
-
+    
     private func fetchMenuItems() {
         title = categories.description.capitalized
         MenuController.shared.fetchMenuItems(forCategory: categories) { result in
@@ -66,37 +57,36 @@ class MenuTableViewController: UITableViewController {
      // MARK: - IBActionSegue
     @IBSegueAction func showMenuItem(_ coder: NSCoder, sender: Any?) -> MenuDetailViewController? {
         guard let cell = sender as? UITableViewCell,
-              let indexPath = tableView.indexPath(for: cell) else { return nil }
-        let menuItem = menuItems[indexPath.row]
-        return MenuDetailViewController(coder: coder, menuItem: menuItem)
-    }
-    
-}
-
- // MARK: - TableView
-extension MenuTableViewController {
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return menuItems.count
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "menuItem", for: indexPath)
-        configureCell(cell, forMenuItemsAt: indexPath)
-        return cell
-    }
-    
-    func configureCell(_ cell: UITableViewCell, forMenuItemsAt indexPath: IndexPath) {
-        let menuItem = menuItems[indexPath.row]
-        cell.textLabel?.text = menuItem.name
-        cell.textLabel?.font = UIFont(name: "Avenir Next", size: 20)
-        cell.detailTextLabel?.text = priceFormatter.string(from: NSNumber(value: menuItem.price))
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
+                    let indexPath = tableView.indexPath(for: cell) else { return nil }
+              let menuItem = menuItems[indexPath.row]
+              return MenuDetailViewController(coder: coder, menuItem: menuItem)
     }
 }
+    // MARK: - TableView
+    extension MenuTableViewController {
+        override func numberOfSections(in tableView: UITableView) -> Int {
+            return 1
+        }
+        
+        override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+            return menuItems.count
+        }
+        
+        override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "menuItem", for: indexPath)
+            configureCell(cell, forMenuItemsAt: indexPath)
+            return cell
+        }
+        
+        func configureCell(_ cell: UITableViewCell, forMenuItemsAt indexPath: IndexPath) {
+            let menuItem = menuItems[indexPath.row]
+            cell.textLabel?.text = menuItem.name
+            cell.textLabel?.font = UIFont(name: "Avenir Next", size: 20)
+            cell.detailTextLabel?.text = MenuController.priceFormatter.string(from: NSNumber(value: menuItem.price))
+        }
+        
+        override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+            return 80
+        }
+    }
+    

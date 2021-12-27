@@ -7,8 +7,19 @@
 
 import Foundation
 
+
+
+
 class MenuController {
     static let shared = MenuController()
+    
+    static let priceFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.currencySymbol = "$"
+        
+        return formatter
+    }()
     
     let baseURL = URL(string: "http://localhost:8080/")
     
