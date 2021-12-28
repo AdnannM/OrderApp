@@ -6,9 +6,7 @@
 //
 
 import Foundation
-
-
-
+import UIKit
 
 class MenuController {
     static let shared = MenuController()
@@ -31,7 +29,7 @@ class MenuController {
     
     let baseURL = URL(string: "http://localhost:8080/")
     
-    typealias MinutesToPrepere = Int
+    typealias MinutesToPrepare = Int
     
     // Get Categories
     func fetchCategories(completion: @escaping(Result<[String], Error>) -> Void) {
@@ -82,32 +80,49 @@ class MenuController {
 
     
     // Post Order
-    func submitOrder(forMenuItems menuID: [Int], completion: @escaping(Result<MinutesToPrepere, Error>) -> Void) {
-        let orderURL = baseURL?.appendingPathComponent("order")
-        var request = URLRequest(url: orderURL!)
+    func submitOrder(forMenuIDs menuIDs: [Int], completion:
+                     @escaping (Result<MinutesToPrepare, Error>) -> Void) {
+        let orderURL = baseURL!.appendingPathComponent("order")
+        var request = URLRequest(url: orderURL)
         request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json",
+                         forHTTPHeaderField: "Content-Type")
         
-        let data = ["menuId" : menuID]
+        let data = ["menuIds": menuIDs]
         let jsonEncoder = JSONEncoder()
         let jsonData = try? jsonEncoder.encode(data)
         request.httpBody = jsonData
-        
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data else {
-                return
-            }
-            
-            do {
-                let jsonDecoder = JSONDecoder()
-                let orderResponse = try jsonDecoder.decode(OrderResponse.self, from: data)
-                completion(.success(orderResponse.prepTime))
-            }
-            catch {
+        // submitOrder
+        let task = URLSession.shared.dataTask(with: request)
+           { (data, response, error) in
+            if let data = data {
+                do {
+                    let jsonDecoder = JSONDecoder()
+                    let orderResponse = try
+                       jsonDecoder.decode(OrderResponse.self, from: data)
+                    completion(.success(orderResponse.prepTime))
+                } catch {
+                    completion(.failure(error))
+                }
+            } else if let error = error {
                 completion(.failure(error))
             }
         }
-        
         task.resume()
+    }
+    
+    // Fetch Image
+    func fetchImage(with url: URL, completion:@escaping(UIImage?) -> Void) {
+        let taks = URLSession.shared.dataTask(with: url) { data, response, error in
+            if let data = data,
+               let image = UIImage(data: data)
+            {
+                 completion(image)
+            } else {
+                completion(nil)
+            }
+        }
+        
+        taks.resume()
     }
  }

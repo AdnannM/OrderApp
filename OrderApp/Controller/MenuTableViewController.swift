@@ -83,6 +83,20 @@ class MenuTableViewController: UITableViewController {
             cell.textLabel?.text = menuItem.name
             cell.textLabel?.font = UIFont(name: "Avenir Next", size: 20)
             cell.detailTextLabel?.text = MenuController.priceFormatter.string(from: NSNumber(value: menuItem.price))
+            MenuController.shared.fetchImage(with: menuItem.imageURL) { image in
+                guard let image = image else {
+                    return
+                }
+                DispatchQueue.main.async {
+                    if let currentIndex = self.tableView.indexPath(for: cell),
+                       currentIndex != indexPath {
+                        return
+                    }
+                    
+                    cell.imageView?.image = image
+                    cell.setNeedsLayout()
+                }
+            }
         }
         
         override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
