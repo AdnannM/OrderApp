@@ -23,6 +23,7 @@
 		A6EB39E82775D89C007955FB /* CategoryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EB39E72775D89C007955FB /* CategoryResponse.swift */; };
 		A6EB39EA2775D8F9007955FB /* OrderResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EB39E92775D8F9007955FB /* OrderResponse.swift */; };
 		A6EB39EC2775D936007955FB /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EB39EB2775D936007955FB /* Order.swift */; };
+		A6FA92A3277C7FE200FD9118 /* Restoration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6FA92A2277C7FE200FD9118 /* Restoration.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		A6EB39E72775D89C007955FB /* CategoryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryResponse.swift; sourceTree = "<group>"; };
 		A6EB39E92775D8F9007955FB /* OrderResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderResponse.swift; sourceTree = "<group>"; };
 		A6EB39EB2775D936007955FB /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
+		A6FA92A2277C7FE200FD9118 /* Restoration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restoration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 		A6EB39C12775CE42007955FB /* OrderApp */ = {
 			isa = PBXGroup;
 			children = (
+				A6FA92A1277C7FC900FD9118 /* Data-Persistence */,
 				A6EB39DA2775CE7D007955FB /* NetworkManager */,
 				A6EB39D92775CE74007955FB /* Controller */,
 				A6EB39D82775CE6E007955FB /* View */,
@@ -135,6 +138,14 @@
 				A64FD7802777280500496135 /* MenuController.swift */,
 			);
 			path = NetworkManager;
+			sourceTree = "<group>";
+		};
+		A6FA92A1277C7FC900FD9118 /* Data-Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				A6FA92A2277C7FE200FD9118 /* Restoration.swift */,
+			);
+			name = "Data-Persistence";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -208,6 +219,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6FA92A3277C7FE200FD9118 /* Restoration.swift in Sources */,
 				A6EB39E42775D75F007955FB /* MenuItem.swift in Sources */,
 				A6EB39E62775D86D007955FB /* MenuResponse.swift in Sources */,
 				A6EB39E22775D6B0007955FB /* MenuDetailViewController.swift in Sources */,

@@ -11,9 +11,12 @@ import UIKit
 class MenuController {
     static let shared = MenuController()
     
+    var userActivity = NSUserActivity(activityType: "com.adnannmuratovic.OrderApp.order")
+    
     var order = Order() {
         didSet {
             NotificationCenter.default.post(name: MenuController.orderUpdateNotification, object: nil)
+            userActivity.order = order
         }
     }
     
