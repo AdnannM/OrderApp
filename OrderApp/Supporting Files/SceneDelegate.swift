@@ -13,13 +13,73 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var orderTabBarItem: UITabBarItem!
 
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(updateOrderBadge), name: MenuController.orderUpdateNotification, object: nil)
-        
-        orderTabBarItem = (window?.rootViewController as? UITabBarController)?.viewControllers?[1].tabBarItem
-        
+    func scene(_ scene: UIScene, willConnectTo session:
+               UISceneSession, options connectionOptions:
+               UIScene.ConnectionOptions) {
         guard let _ = (scene as? UIWindowScene) else { return }
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updateOrderBadge),
+                                               name: MenuController.orderUpdateNotification, object: nil)
+        orderTabBarItem = (window?.rootViewController as?
+                           UITabBarController)?.viewControllers?[1].tabBarItem
+        
+        if let userActivity =
+            connectionOptions.userActivities.first ??
+            session.stateRestorationActivity {
+            configureScene(for: userActivity)
+        }
+    }
+    
+    func stateRestorationActivity(for scene: UIScene) -> NSUserActivity? {
+        return MenuController.shared.userActivity
+    }
+    
+    func configureScene(for userActivity: NSUserActivity) {
+        if let restoredOrder = userActivity.order {
+            MenuController.shared.order = restoredOrder
+        }
+        
+        guard
+            let restorationController =
+               StateRestorantionController(userActiviry: userActivity),
+            let tabBarController = window?.rootViewController as?
+               UITabBarController,
+                tabBarController.viewControllers?.count == 2,
+            let categoryTableViewController =
+               (tabBarController.viewControllers?[0] as?
+               UINavigationController)?.topViewController as?
+               CategoryTableViewController
+        else {
+            return
+        }
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        switch restorationController {
+        case .categories:
+            break
+        case .order:
+            tabBarController.selectedIndex = 1
+        case .menu(category: let category):
+            let menuTableViewController = storyboard.instantiateViewController(identifier: restorationController.identifier.rawValue) { coder in
+                return MenuTableViewController(coder: coder, categories: category)
+            }
+            
+            categoryTableViewController.navigationController?.pushViewController(menuTableViewController, animated: true)
+            
+        case .menuItemDetail(let menuItem):
+            let menuTableViewController = storyboard.instantiateViewController(identifier: StateRestorantionController.Identifier.menu.rawValue) { coder in
+                return MenuTableViewController(coder: coder, categories: menuItem.category)
+            }
+            
+            let menuItemDetailViewController = storyboard.instantiateViewController(identifier: restorationController.identifier.rawValue) { coder in
+                return MenuDetailViewController(coder: coder, menuItem: menuItem)
+            }
+            
+            categoryTableViewController.navigationController?.pushViewController(menuTableViewController, animated: true)
+            categoryTableViewController.navigationController?.pushViewController(menuItemDetailViewController, animated: true)
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

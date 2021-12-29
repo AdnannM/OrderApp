@@ -11,7 +11,7 @@ import UIKit
 class MenuController {
     static let shared = MenuController()
     
-    var userActivity = NSUserActivity(activityType: "com.adnannmuratovic.OrderApp.order")
+    var userActivity = NSUserActivity(activityType: "com.example.OrderApp.order")
     
     var order = Order() {
         didSet {
@@ -127,5 +127,19 @@ class MenuController {
         }
         
         taks.resume()
+    }
+    
+    // State Restoration Controller
+    func updateUserActivity(with controller: StateRestorantionController) {
+        switch controller {
+        case .menu(let category):
+            userActivity.menuCategory = category
+        case .menuItemDetail(let menuItem):
+            userActivity.menuItem = menuItem
+        case .order, .categories:
+            break
+        }
+        
+        userActivity.controllerIdentifier = controller.identifier
     }
  }

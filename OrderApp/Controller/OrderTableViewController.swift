@@ -19,6 +19,11 @@ class OrderTableViewController: UITableViewController {
         navigationItem.leftBarButtonItem = editButtonItem
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        MenuController.shared.updateUserActivity(with: .order)
+    }
+    
      // MARK: - Action
     @IBSegueAction func confirmOrder(_ coder: NSCoder, sender: Any?) -> OrderConfirmationViewController? {
         return OrderConfirmationViewController(coder: coder, minuteToPrepare: minuteToPrepare)

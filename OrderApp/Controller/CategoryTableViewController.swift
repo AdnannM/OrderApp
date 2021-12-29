@@ -18,6 +18,11 @@ class CategoryTableViewController: UITableViewController {
         fetchCategories()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        MenuController.shared.updateUserActivity(with: .categories)
+    }
+    
     private func fetchCategories() {
         MenuController.shared.fetchCategories { result in
             switch result {
